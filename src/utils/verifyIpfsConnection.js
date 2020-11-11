@@ -7,7 +7,7 @@ const ipfsVersion = require("./ipfs/ipfsVersion");
 async function verifyIpfsConnection({ ipfsProvider }) {
   try {
     await ipfsVersion(ipfsProvider);
-    console.log("Connection to IPFS successful",ipfsProvider);
+    console.log("Connection to IPFS successful ",ipfsProvider);
   } catch (e) {
     if (e.code === "ENOTFOUND") {
       if (ipfsProvider === "dappnode") {
@@ -18,7 +18,7 @@ async function verifyIpfsConnection({ ipfsProvider }) {
         error(`Could not reach IPFS provider at ${ipfsProvider}`);
       }
     } else {
-      error(`Cannot connect to IPFS server`);
+      error(`Cannot connect to IPFS server.. ${ipfsProvider} ${e.message}`);
       throw e;
     }
   }
