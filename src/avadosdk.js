@@ -6,7 +6,7 @@ const { CliError, YargsError } = require("./params");
 
 // Set up commands
 const dappnodesdk = require("yargs")
-  .usage(`Usage: dappnodesdk <command> [options]`)
+  .usage(`Usage: avadosdk <command> [options]`)
   .commandDir("./commands");
 
 dappnodesdk.alias("h", "help");

@@ -1,8 +1,8 @@
 {
-  "name": "dappnodesdk",
+  "name": "avadosdk",
   "version": "0.2.9-beta.0",
-  "description": "dappnodesdk is a tool to make the creation of new dappnode packages as simple as possible. It helps to initialize and publish in ethereum blockchain",
-  "main": "dappnodesdk.js",
+  "description": "avadosdk is a tool to make the creation of new avado packages as simple as possible. It helps to initialize and publish in ethereum blockchain",
+  "main": "avadosdk.js",
   "scripts": {
     "test": "mocha \"./{,!(node_modules)/**}/*.test.js\" ",
     "test:file": "mocha ",
@@ -11,27 +11,14 @@
     "pre-commit": "npm run lint && npm run test"
   },
   "bin": {
-    "dappnodesdk": "./src/dappnodesdk.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dappnode/DAppNodeSDK.git"
+    "avadosdk": "./src/avadosdk.js"
   },
   "keywords": [
     "cli",
-    "dappnode",
+    "avado",
     "ethereum"
   ],
-  "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
-  "contributors": [
-    "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)",
-    "dappLion <dapplion@dappnode.io> (https://github.com/dapplion)"
-  ],
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/dappnode/DAppNodeSDK/issues"
-  },
-  "homepage": "https://github.com/dappnode/DAppNodeSDK#readme",
   "dependencies": {
     "@dappnode/dnp-manifest": "^0.0.4",
     "@octokit/rest": "^16.27.3",
