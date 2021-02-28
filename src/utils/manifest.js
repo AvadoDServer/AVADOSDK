@@ -32,7 +32,7 @@ function getManifestPath({
  */
 function writeManifest({ manifest, dir, manifestFileName }) {
   check(manifest, "manifest", "object");
-
+  manifest.builddate = new Date();
   const path = getManifestPath({ dir, manifestFileName });
   const data = JSON.stringify(manifest, null, 2);
   fs.writeFileSync(path, data);
