@@ -14,15 +14,18 @@ const { normalizeIpfsProvider } = require("./ipfsProvider");
  */
 async function ipfsVersion(ipfsProvider) {
   // Parse the ipfsProvider the a full base apiUrl
-  const apiUrl = normalizeIpfsProvider(ipfsProvider);
-  const res = await got({
-    prefixUrl: apiUrl,
-    url: "/api/v0/version",
-    method: "GET",
-    responseType: "json"
-  });
+  // const apiUrl = normalizeIpfsProvider(ipfsProvider);
+  // const res = await got({
+  //   prefixUrl: apiUrl,
+  //   url: "/api/v0/version",
+  //   method: "GET",
+  //   responseType: "json"
+  // });
 
-  return res.body;
+  // return res.body;
+
+  return "ok";
+
 }
 
 module.exports = ipfsVersion;

@@ -11,7 +11,7 @@ async function verifyIpfsConnection({ ipfsProvider }) {
   } catch (e) {
     if (e.code === "ENOTFOUND") {
       if (ipfsProvider === "dappnode") {
-        error(`Can't connect to DAppNode, check your VPN connection`);
+        error(`Can't connect to AVADO, check your VPN connection`);
       } else if (ipfsProvider === "infura") {
         error(`Can't connect to Infura's ipfs endpoint`);
       } else {
