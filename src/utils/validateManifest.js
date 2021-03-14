@@ -19,10 +19,13 @@ function validateManifest(manifest, options) {
 
   // If not valid, print errors and stop execution
 
+  console.log(errors,manifest);
+  // process.exit();
+
   throw new CliError(
     "Invalid manifest:",
     errors.map(msg => `  - ${msg}`).join("\n"),
-    manifest
+    // manifest
   );
 }
 

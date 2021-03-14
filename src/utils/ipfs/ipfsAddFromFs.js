@@ -5,6 +5,7 @@ const fs = require("fs");
 // const traverseDir = require("./traverseDir");
 const { normalizeIpfsProvider } = require("./ipfsProvider");
 const IpfsHttpClient = require('ipfs-http-client');
+const CID = require("cids");
 const { globSource } = IpfsHttpClient;
 const { CliError } = require("../../params");
 
@@ -29,8 +30,11 @@ async function ipfsAddFromFs(dirOrFile, ipfsProvider, onProgress) {
     );
 
   }
-  const { path } = await ipfs.add(globSource(dirOrFile));
-  return `/ipfs/${path}`;
+
+  const { cid } = await ipfs.add(globSource(dirOrFile));
+  const myCid = new CID(cid);
+  return `/ipfs/${myCid.toString()}`;
+
 }
 
 module.exports = ipfsAddFromFs;
