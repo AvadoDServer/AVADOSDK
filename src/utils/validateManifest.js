@@ -21,7 +21,8 @@ function validateManifest(manifest, options) {
 
   throw new CliError(
     "Invalid manifest:",
-    errors.map(msg => `  - ${msg}`).join("\n")
+    errors.map(msg => `  - ${msg}`).join("\n"),
+    manifest
   );
 }
 

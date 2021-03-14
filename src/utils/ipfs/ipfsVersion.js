@@ -1,5 +1,5 @@
-const got = require("got");
-const { normalizeIpfsProvider } = require("./ipfsProvider");
+// const got = require("got");
+// const { normalizeIpfsProvider } = require("./ipfsProvider");
 
 /**
  * Show ipfs version information
