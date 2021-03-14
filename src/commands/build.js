@@ -78,7 +78,7 @@ exports.handler = async ({
   const { releaseMultiHash } = await buildAndUploadTasks.run();
 
   console.log(`
-  ${chalk.green("DNP (DAppNode Package) built and uploaded")} 
+  ${chalk.green("package built and uploaded")} 
   ${isDirectoryRelease ? "Release" : "Manifest"} hash : ${releaseMultiHash}
   ${getLinks.installDnp({ releaseMultiHash })}
 `);

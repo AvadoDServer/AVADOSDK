@@ -61,7 +61,7 @@ exports.handler = async ({
   const { avatarIpfsPath } = await addAvatarTasks.run();
 
   console.log(`
-  ${chalk.green("DNP (DAppNode Package) avatar uploaded")} 
+  ${chalk.green("avatar uploaded")} 
   Avatar hash  : ${avatarIpfsPath}
 `);
 };
