@@ -34,6 +34,7 @@
     "got": "^10.5.5",
     "image-size": "^0.8.1",
     "inquirer": "^6.2.1",
+    "ipfs-http-client": "^49.0.4",
     "js-yaml": "^3.12.1",
     "listr": "^0.14.3",
     "lodash": "^4.17.15",
