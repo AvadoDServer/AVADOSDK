@@ -3,7 +3,7 @@ const Listr = require("listr");
 // Utils
 const verifyAvatar = require("../utils/verifyAvatar");
 const getAssetPath = require("../utils/getAssetPath");
-const releaseFiles = require("../params");
+const { releaseFiles } = require("../params");
 const verifyIpfsConnection = require("../utils/verifyIpfsConnection");
 const { readManifest, writeManifest } = require("../utils/manifest");
 const ipfsAddFromFs = require("../utils/ipfs/ipfsAddFromFs");
