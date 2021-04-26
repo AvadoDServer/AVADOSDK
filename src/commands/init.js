@@ -49,7 +49,7 @@ build_*
 
 exports.command = "init";
 
-exports.describe = "Initialize a new DAppNodePackage (DNP) repository";
+exports.describe = "Initialize a new AVADO package (DNP) repository";
 
 exports.builder = yargs =>
   yargs
@@ -109,7 +109,7 @@ It only covers the most common items, and tries to guess sensible defaults.
           type: "input",
           name: "name",
           default: defaultAnswers.name,
-          message: "DAppNodePackage name"
+          message: "AVADO package name"
         },
         {
           type: "input",
@@ -194,7 +194,7 @@ It only covers the most common items, and tries to guess sensible defaults.
   writeGitIgnore(path.join(dir, gitignorePath));
 
   console.log(`
-${chalk.green("Your DAppNodePackage is ready")}: ${manifest.name}
+${chalk.green("Your AVADO package is ready")}: ${manifest.name}
 
 To start, you can:
 
@@ -210,7 +210,7 @@ Once ready, you can build, install, and test it by running
 
 /**
  * Parses a directory or generic package name and returns a full ENS guessed name
- * @param {string} name "DAppNodePackage-vipnode"
+ * @param {string} name "AVADOpackage-vipnode"
  * @return {string} "vipnode.public.dappnode.eth"
  */
 function getDnpName(name) {
