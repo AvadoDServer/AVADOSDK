@@ -18,11 +18,11 @@ const stringsToRemoveFromName = [
 
 // Manifest
 const manifestPath = "dappnode_package.json";
-const publicRepoDomain = ".public.dappnode.eth";
-const defaultVersion = "0.1.0";
+const publicRepoDomain = "avado.dappnode.eth";
+const defaultVersion = "0.0.1";
 
 // Avatar
-const avatarPath = "avatar-default.png";
+const avatarPath = "avatar.png";
 const avatarData = defaultAvatar;
 
 // Dockerfile
@@ -151,9 +151,12 @@ It only covers the most common items, and tries to guess sensible defaults.
     name: answers.name ? getDnpName(answers.name) : defaultName,
     version: answers.version || defaultVersion,
     description: answers.description,
+    autoupdate: true,
     type: "service",
+    avatar: "/ipfs/QmYRmFCtdXvqq3drc6kBXxeWiiMatTfKVpVrmLX883cQbR",
     author: answers.author,
-    categories: ["Developer tools"],
+    image: {},
+    // categories: ["Developer tools"],
     links: {
       homepage: "https://your-project-homepage-or-docs.io"
     },
