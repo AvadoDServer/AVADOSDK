@@ -1,4 +1,4 @@
-const adminUiBaseUrl = "http://my.dappnode/#";
+const adminUiBaseUrl = "http://my.avado/#";
 
 /**
  * Get link to publish a TX from a txData object
