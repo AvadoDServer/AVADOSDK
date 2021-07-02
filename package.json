@@ -1,6 +1,6 @@
 {
   "name": "avadosdk",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "avadosdk is a tool to make the creation of new avado packages as simple as possible. It helps to initialize and publish in ethereum blockchain",
   "main": "avadosdk.js",
   "scripts": {
