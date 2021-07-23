@@ -1,7 +1,7 @@
 const sizeOf = require("image-size");
 const { CliError } = require("../params");
 
-const maxSize = 300;
+const maxSize = 800;
 const minSize = 200;
 
 function verifyAvatar(avatarPath) {
