@@ -52,7 +52,7 @@ function buildAndUpload({
    */
   const buildTimeout = userTimeout
     ? parseInt(isNaN(userTimeout) ? timestring(userTimeout) : userTimeout) *
-      1000
+    1000
     : defaultBuildTimeout;
 
   // Load manifest #### Deleted check functions. Verify manifest beforehand
@@ -262,7 +262,7 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
         writeManifest({ manifest, dir: buildDir });
         // Starts with /ipfs/
         ctx.releaseHash = await ipfsAddFromFs(
-          manifestPath,
+          getManifestPath({ manifest, dir: buildDir }),
           ipfsProvider,
           percent => {
             task.output = percentToUploadMessage(percent);
@@ -299,8 +299,8 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
       ...(uploadToSwarm
         ? uploadDirectoryReleaseToSwarmTasks
         : isDirectoryRelease
-        ? uploadDirectoryReleaseToIpfsTasks
-        : uploadManifestReleaseToIpfsTasks),
+          ? uploadDirectoryReleaseToIpfsTasks
+          : uploadManifestReleaseToIpfsTasks),
       writeResultsTask
     ],
     { renderer: verbose ? "verbose" : silent ? "silent" : "default" }
