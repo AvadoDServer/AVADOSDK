@@ -56,7 +56,7 @@ function buildAndUpload({
     : defaultBuildTimeout;
 
   // Load manifest #### Deleted check functions. Verify manifest beforehand
-  const manifest = readManifest({ dir, "avado_manifest.json" });
+  const manifest = readManifest({ dir });
   const manifestPath = getManifestPath({ dir });
 
   // Make sure the release is of correct type
