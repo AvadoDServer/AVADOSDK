@@ -258,8 +258,8 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
         // validateManifest calls `process.exit(1)` in case of error
         validateManifest(manifest);
         // Update manifest
-        // writeManifest({ manifest, dir });
         writeManifest({ manifest, dir: buildDir });
+
         // Starts with /ipfs/
         ctx.releaseHash = await ipfsAddFromFs(
           getManifestPath({ manifest, dir: buildDir }),
@@ -268,6 +268,22 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
             task.output = percentToUploadMessage(percent);
           }
         );
+
+        // clean unused fields in manifest if present
+        // since they cause all kinds of git issues
+        if (
+          manifest.image.path ||
+          manifest.image.image ||
+          manifest.image.hash ||
+          manifest.builddate
+        ) {
+          delete manifest.image.path;
+          delete manifest.image.image;
+          delete manifest.image.hash;
+          delete manifest.builddate;
+
+          writeManifest({ manifest, dir });
+        }
       }
     }
   ];
