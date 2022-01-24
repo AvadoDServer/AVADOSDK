@@ -258,6 +258,7 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
         // validateManifest calls `process.exit(1)` in case of error
         validateManifest(manifest);
         // Update manifest
+        manifest.builddate = new Date();
         writeManifest({ manifest, dir: buildDir });
 
         // Starts with /ipfs/
