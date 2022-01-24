@@ -1,6 +1,6 @@
 function getIpfsProviderUrl(provider = "dappnode") {
   if (provider === "dappnode") {
-    return "http://my.ipfs.dnp.dappnode.eth";
+    return "http://ipfs.my.ava.do";
   } else if (provider === "infura") {
     return "https://ipfs.infura.io";
   } else {
