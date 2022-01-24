@@ -25,9 +25,6 @@ async function increaseFromLocalVersion({ type, dir }) {
     // Reset the image path, hash, and size fields.
     // They no longer represent the increased version
     check(manifest.image, "manifest image", "object");
-    manifest.image.path = "";
-    manifest.image.hash = "";
-    manifest.image.size = "";
   }
 
   // Mofidy and write the manifest and docker-compose
