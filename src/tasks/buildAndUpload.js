@@ -14,7 +14,7 @@ const {
 const validateManifest = require("../utils/validateManifest");
 const verifyAvatar = require("../utils/verifyAvatar");
 const getAssetPath = require("../utils/getAssetPath");
-// const { addReleaseRecord } = require("../utils/releaseRecord");
+const { addReleaseRecord } = require("../utils/releaseRecord");
 const { releaseFiles, CliError } = require("../params");
 
 // Commands
@@ -293,13 +293,13 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
   const writeResultsTask = {
     title: "Save upload results",
     task: async ctx => {
-      // addReleaseRecord({
-      //   dir,
-      //   version,
-      //   hash: ctx.releaseHash,
-      //   type: isDirectoryRelease ? "directory" : "manifest",
-      //   to: uploadToSwarm ? swarmProvider : ipfsProvider
-      // });
+      addReleaseRecord({
+        dir,
+        version,
+        hash: ctx.releaseHash,
+        type: isDirectoryRelease ? "directory" : "manifest",
+        to: uploadToSwarm ? swarmProvider : ipfsProvider
+      });
 
       // "return" result for next tasks
       ctx.releaseMultiHash = ctx.releaseHash;
