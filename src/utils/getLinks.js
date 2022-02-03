@@ -1,4 +1,4 @@
-const adminUiBaseUrl = "http://my.avado/#";
+const adminUiBaseUrl = "http://my.ava.do/#";
 
 /**
  * Get link to publish a TX from a txData object
