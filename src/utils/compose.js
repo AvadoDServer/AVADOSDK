@@ -29,6 +29,7 @@ function getComposePath({ dir = "./", composeFileName = DOCKERCOMPOSE }) {
  * }
  */
 function generateAndWriteCompose({ manifest, dir, composeFileName }) {
+  console.log("manifest=",manifest);
   const composeYaml = generateCompose({ manifest });
   writeCompose({ composeYaml, dir, composeFileName });
 }

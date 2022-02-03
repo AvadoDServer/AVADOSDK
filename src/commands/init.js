@@ -31,7 +31,7 @@ const dockerfileData = `FROM busybox
 
 WORKDIR /usr/src/app
 
-ENTRYPOINT echo "happy buidl $USERNAME!"
+ENTRYPOINT echo "happy buidl $USERNAME!" && sleep 9999
 `;
 
 // .gitignore
@@ -49,7 +49,7 @@ build_*
 
 exports.command = "init";
 
-exports.describe = "Initialize a new AVADO package (DNP) repository";
+exports.describe = "Initialize a new AVADO package in the current directory";
 
 exports.builder = yargs =>
   yargs
@@ -105,46 +105,46 @@ It only covers the most common items, and tries to guess sensible defaults.
   const answers = useDefaults
     ? defaultAnswers
     : await inquirer.prompt([
-        {
-          type: "input",
-          name: "name",
-          default: defaultAnswers.name,
-          message: "AVADO package name"
-        },
-        {
-          type: "input",
-          name: "version",
-          default: defaultAnswers.version,
-          message: "Version",
-          validate: val =>
-            !semver.valid(val) ||
+      {
+        type: "input",
+        name: "name",
+        default: defaultAnswers.name,
+        message: "AVADO package name"
+      },
+      {
+        type: "input",
+        name: "version",
+        default: defaultAnswers.version,
+        message: "Version",
+        validate: val =>
+          !semver.valid(val) ||
             !(
               semver.eq(val, "1.0.0") ||
               semver.eq(val, "0.1.0") ||
               semver.eq(val, "0.0.1")
             )
-              ? "the version needs to be valid semver. If this is the first release, the version must be 1.0.0, 0.1.0 or 0.0.1 "
-              : true
-        },
-        {
-          type: "input",
-          name: "description",
-          message: "Description",
-          default: defaultAnswers.description
-        },
-        {
-          type: "input",
-          message: "Author",
-          name: "author",
-          default: defaultAnswers.author
-        },
-        {
-          type: "input",
-          message: "License",
-          name: "license",
-          default: defaultAnswers.license
-        }
-      ]);
+            ? "the version needs to be valid semver. If this is the first release, the version must be 1.0.0, 0.1.0 or 0.0.1 "
+            : true
+      },
+      {
+        type: "input",
+        name: "description",
+        message: "Description",
+        default: defaultAnswers.description
+      },
+      {
+        type: "input",
+        message: "Author",
+        name: "author",
+        default: defaultAnswers.author
+      },
+      {
+        type: "input",
+        message: "License",
+        name: "license",
+        default: defaultAnswers.license
+      }
+    ]);
 
   // Construct DNP
   const manifest = {
@@ -155,8 +155,19 @@ It only covers the most common items, and tries to guess sensible defaults.
     type: "service",
     avatar: "/ipfs/QmYRmFCtdXvqq3drc6kBXxeWiiMatTfKVpVrmLX883cQbR",
     author: answers.author,
-    image: {},
-    // categories: ["Developer tools"],
+    image: {
+      "volumes": [
+        "data:/data"
+      ],
+      "ports": [
+        "12345:12345",
+        "12345:12345/UDP"
+      ],
+      "environment": [
+        "EXTRA_OPTS=",
+        "MY_DOCKER_ENV_VAR="
+      ]
+    },
     links: {
       homepage: "https://your-project-homepage-or-docs.io"
     },
@@ -169,11 +180,7 @@ It only covers the most common items, and tries to guess sensible defaults.
   // Write manifest and compose
   writeManifest({ manifest, dir });
   generateAndWriteCompose({
-    manifest: {
-      name: manifest.name,
-      version: manifest.version,
-      image: {}
-    },
+    manifest,
     dir
   });
 
@@ -202,9 +209,14 @@ To start, you can:
  - Add settings in the compose at   ./docker-compose.yml
  - Add metadata in the manifest at  ./dappnode_package.json
 
-Once ready, you can build, install, and test it by running
+ - Test your docker locally using "docker-compose up"
 
-  dappnodesdk build 
+Make sure to replace the example ports and environment variables with 
+your ports and environment variables - or remove them if you don't need them.
+
+Once ready, you can build, install, and test it on your AVADO by running
+
+  avadosdk build 
 `);
 };
 
@@ -223,7 +235,7 @@ function getDnpName(name) {
   name = name.toLowerCase();
 
   // Append public domain
-  return name.endsWith(".eth") ? name : name + publicRepoDomain;
+  return name.endsWith(".eth") ? name : `${name}.${publicRepoDomain}`;
 }
 
 /**
