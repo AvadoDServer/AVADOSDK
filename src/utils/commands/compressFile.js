@@ -12,7 +12,7 @@ function compressFile(path, { logger, timeout }) {
    * -vv: Very verbose log to provide progress
    * -f: overwrite the destination path if necessary
    */
-  const cmdOg = `xz -e9T0 -vv -f ${path}`;
+  const cmdOg = `xz -6T0 -vv -f ${path}`;
   const cmd = `${cmdOg} & xz_pid=$!
 while sleep 1; do
   kill -ALRM "$xz_pid" || break
