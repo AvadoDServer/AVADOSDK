@@ -24,6 +24,10 @@ function installDnp({ releaseMultiHash }) {
   return `${adminUiBaseUrl}/installer/${encodeURIComponent(releaseMultiHash)}`;
 }
 
+ function overwriteDnp({ releaseMultiHash }) {
+  return `http://go.ava.do/install${releaseMultiHash}`;
+}
+
 // Utils
 
 function stringifyUrlQuery(obj) {
@@ -34,5 +38,6 @@ function stringifyUrlQuery(obj) {
 
 module.exports = {
   publishTx,
-  installDnp
+  installDnp,
+  overwriteDnp
 };

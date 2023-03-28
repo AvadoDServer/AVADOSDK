@@ -16,7 +16,7 @@ const { CliError } = require("../../params");
  * @param {(percent: number) => void} [onProgress] Report upload progress, 0.4631
  * @returns {Promise<string>} "/ipfs/Qm..."
  */
-async function ipfsAddFromFs(dirOrFile, ipfsProvider, onProgress) {
+async function ipfsAddFromFs(dirOrFile, ipfsProvider) {
 
   // Parse the ipfsProvider the a full base apiUrl
   const apiUrl = normalizeIpfsProvider(ipfsProvider);
