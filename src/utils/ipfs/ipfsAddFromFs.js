@@ -18,8 +18,7 @@ async function ipfsAddFromFs(dirOrFile, ipfsProvider) {
 
   // Parse the ipfsProvider the a full base apiUrl
   const apiUrl = normalizeIpfsProvider(ipfsProvider);
-
-  const ipfs = create(new URL(apiUrl))
+  const ipfs = create(new URL(apiUrl));
 
   if (fs.lstatSync(dirOrFile).isDirectory()) {
     throw new CliError(
@@ -27,7 +26,9 @@ async function ipfsAddFromFs(dirOrFile, ipfsProvider) {
     );
   }
 
-  const { cid } = await ipfs.add(dirOrFile);
+  const file = fs.readFileSync(dirOrFile);
+  const { cid } = await ipfs.add(file);
+
   return `/ipfs/${cid}`;
 
 }
