@@ -57,7 +57,6 @@ function buildAndUpload({
 
   // Load manifest #### Deleted check functions. Verify manifest beforehand
   const manifest = readManifest({ dir });
-  const manifestPath = getManifestPath({ dir });
 
   // Make sure the release is of correct type
   if (isDirectoryRelease && manifest.image)
@@ -234,14 +233,11 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
     },
     {
       title: "Upload image to IPFS",
-      task: async (_, task) => {
+      task: async () => {
         // Starts with /ipfs/
         const imageUploadHash = await ipfsAddFromFs(
           imagePathCompressed,
-          ipfsProvider,
-          percent => {
-            task.output = percentToUploadMessage(percent);
-          }
+          ipfsProvider
         );
         // Mutate manifest
         manifest.image = {
@@ -254,7 +250,7 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
     },
     {
       title: "Upload manifest to IPFS",
-      task: async (ctx, task) => {
+      task: async (ctx) => {
         // validateManifest calls `process.exit(1)` in case of error
         validateManifest(manifest);
         // Update manifest
@@ -264,10 +260,7 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
         // Starts with /ipfs/
         ctx.releaseHash = await ipfsAddFromFs(
           getManifestPath({ manifest, dir: buildDir }),
-          ipfsProvider,
-          percent => {
-            task.output = percentToUploadMessage(percent);
-          }
+          ipfsProvider
         );
 
         // clean unused fields in manifest if present

@@ -4,7 +4,6 @@ const chalk = require("chalk");
 const buildAndUpload = require("../tasks/buildAndUpload");
 // Utils
 const getCurrentLocalVersion = require("../utils/versions/getCurrentLocalVersion");
-const verifyIpfsConnection = require("../utils/verifyIpfsConnection");
 const getLinks = require("../utils/getLinks");
 
 /**
@@ -61,8 +60,6 @@ exports.handler = async ({
   const nextVersion = getCurrentLocalVersion({ dir });
   const buildDir = path.join(dir, `build_${nextVersion}`);
 
-  await verifyIpfsConnection({ ipfsProvider });
-
   const buildAndUploadTasks = buildAndUpload({
     dir,
     buildDir,
@@ -80,6 +77,7 @@ exports.handler = async ({
   console.log(`
   ${chalk.green("package built and uploaded")} 
   ${isDirectoryRelease ? "Release" : "Manifest"} hash : ${releaseMultiHash}
-  ${getLinks.installDnp({ releaseMultiHash })}
+  Install : ${getLinks.installDnp({ releaseMultiHash })}
+  Overwrite install : ${getLinks.overwriteDnp({ releaseMultiHash })}
 `);
 };

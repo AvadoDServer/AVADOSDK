@@ -4,9 +4,6 @@ const fs = require("fs");
 // const FormData = require("form-data");
 // const traverseDir = require("./traverseDir");
 const { normalizeIpfsProvider } = require("./ipfsProvider");
-const IpfsHttpClient = require('ipfs-http-client');
-const CID = require("cids");
-const { globSource } = IpfsHttpClient;
 const { CliError } = require("../../params");
 
 /**
@@ -15,25 +12,24 @@ const { CliError } = require("../../params");
  * @param {string} ipfsProvider "dappnode" | "http://localhost:5001"
  * @param {(percent: number) => void} [onProgress] Report upload progress, 0.4631
  * @returns {Promise<string>} "/ipfs/Qm..."
- */
-async function ipfsAddFromFs(dirOrFile, ipfsProvider, onProgress) {
+*/
+async function ipfsAddFromFs(dirOrFile, ipfsProvider) {
+  const { create } = await import('ipfs-http-client')
 
   // Parse the ipfsProvider the a full base apiUrl
   const apiUrl = normalizeIpfsProvider(ipfsProvider);
-
-  const ipfs = IpfsHttpClient(new URL(apiUrl))
+  const ipfs = create(new URL(apiUrl));
 
   if (fs.lstatSync(dirOrFile).isDirectory()) {
-
     throw new CliError(
       `Directory adding is not supported`
     );
-
   }
 
-  const { cid } = await ipfs.add(globSource(dirOrFile));
-  const myCid = new CID(cid);
-  return `/ipfs/${myCid.toString()}`;
+  const file = fs.readFileSync(dirOrFile);
+  const { cid } = await ipfs.add(file);
+
+  return `/ipfs/${cid}`;
 
 }
 

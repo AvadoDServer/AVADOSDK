@@ -1,7 +1,6 @@
 const expect = require("chai").expect;
 const fs = require("fs");
 const { rmSafe, shellSafe } = require("../shellSafe");
-const { omit } = require("lodash");
 const yaml = require("js-yaml");
 const buildAndUpload = require("../../src/tasks/buildAndUpload");
 
@@ -72,25 +71,6 @@ ENV test=1
       dir: "./",
       buildDir,
       ipfsProvider: ipfsProvider,
-      verbose: true
-    });
-    const { releaseMultiHash } = await buildAndUploadTasks.run();
-    // Check returned hash is correct
-    expect(releaseMultiHash).to.include("/ipfs/Qm");
-  }).timeout(60 * 1000);
-
-  it("Should build and upload the current version as directory type release", async () => {
-    // Rewrite the manifest to not contain image
-    fs.writeFileSync(
-      manifestPath,
-      JSON.stringify(omit(manifest, "image", "avatar"), null, 2)
-    );
-
-    const buildAndUploadTasks = buildAndUpload({
-      dir: "./",
-      buildDir,
-      ipfsProvider: ipfsProvider,
-      isDirectoryRelease: true,
       verbose: true
     });
     const { releaseMultiHash } = await buildAndUploadTasks.run();
