@@ -13,11 +13,7 @@ function compressFile(path, { logger, timeout }) {
    * -f: overwrite the destination path if necessary
    */
   const cmdOg = `xz -6T0 -vv -f ${path}`;
-  const cmd = `${cmdOg} & xz_pid=$!
-while sleep 1; do
-  kill -ALRM "$xz_pid" || break
-done
-wait "$xz_pid"`;
+  const cmd = `${cmdOg}`; 
   let stderr = "";
   const xz = execa.shell(cmd, { timeout });
   return new Promise((resolve, reject) => {
