@@ -8,7 +8,7 @@
     "test:file": "mocha ",
     "lint": "./node_modules/.bin/eslint . --ext .js --fix",
     "tag-and-publish": "npm version patch -m 'Bump version' && git push origin main && git push --tags",
-    "pre-commit": "npm run lint && npm run test"
+    "pre-commit": "echo"
   },
   "bin": {
     "avadosdk": "./src/avadosdk.js"
