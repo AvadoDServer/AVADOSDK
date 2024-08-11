@@ -153,7 +153,7 @@ Just delete the 'manifest.avatar' property, and it will be added in the release 
       const logger = msg => {
         task.output = msg;
       };
-      await execaProgress("docker-compose build", { logger });
+      await execaProgress("docker compose build", { logger });
     }
   };
 
