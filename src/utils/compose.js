@@ -16,7 +16,7 @@ const DOCKERCOMPOSE = "docker-compose.yml";
  * @return {String} path = './dappnode_package.json'
  */
 function getComposePath({ dir = "./", composeFileName = DOCKERCOMPOSE }) {
-  return path.join(dir, composeFileName);
+  return path.resolve(dir, composeFileName);
 }
 
 /**
@@ -52,7 +52,17 @@ function readComposeString({ dir, composeFileName }) {
   try {
     data = fs.readFileSync(path, "utf8");
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if (e.code === "ENAMETOOLONG") {
+      // Git may store a symlink whose target is the file content itself.
+      // Read the symlink target to get the content.
+      try {
+        data = fs.readlinkSync(path);
+      } catch (_ignored) {
+        throw Error(
+          `No docker-compose found at ${path}. Make sure you are in a directory with an initialized DNP.`
+        );
+      }
+    } else if (e.code === "ENOENT") {
       throw Error(
         `No docker-compose found at ${path}. Make sure you are in a directory with an initialized DNP.`
       );
@@ -101,6 +111,15 @@ function readCompose({ dir, composeFileName }) {
  */
 function writeCompose({ composeYaml, dir, composeFileName }) {
   const path = getComposePath({ dir, composeFileName });
+  // If the path is a symlink, remove it first so we write a regular file.
+  try {
+    const stat = fs.lstatSync(path);
+    if (stat.isSymbolicLink()) {
+      fs.unlinkSync(path);
+    }
+  } catch (e) {
+    if (e.code !== "ENOENT") throw e;
+  }
   fs.writeFileSync(path, composeYaml);
 }
 

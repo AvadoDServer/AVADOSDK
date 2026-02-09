@@ -18,7 +18,7 @@ function getManifestPath({
   dir = "./",
   manifestFileName = MANIFEST_NAME
 } = {}) {
-  return path.join(dir, manifestFileName);
+  return path.resolve(dir, manifestFileName);
 }
 
 /**
@@ -34,6 +34,17 @@ function writeManifest({ manifest, dir, manifestFileName }) {
   check(manifest, "manifest", "object");
   const path = getManifestPath({ dir, manifestFileName });
   const data = JSON.stringify(manifest, null, 2);
+  // If the manifest path is a symlink (e.g. created by setNetwork.sh or git
+  // storing symlink content inline), remove it first so we write a regular file.
+  try {
+    const stat = fs.lstatSync(path);
+    if (stat.isSymbolicLink()) {
+      fs.unlinkSync(path);
+    }
+  } catch (e) {
+    // Ignore if file does not exist yet
+    if (e.code !== "ENOENT") throw e;
+  }
   fs.writeFileSync(path, data);
 }
 
@@ -54,7 +65,19 @@ function readManifestString({ dir, manifestFileName } = {}) {
   try {
     data = fs.readFileSync(path, "utf8");
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if (e.code === "ENAMETOOLONG") {
+      // Git may store a symlink whose target is the file content itself
+      // (instead of a real path). readFileSync fails because the "path" is
+      // actually the full JSON string which exceeds the OS filename limit.
+      // Read the symlink target to get the content.
+      try {
+        data = fs.readlinkSync(path);
+      } catch (_ignored) {
+        throw new CliError(
+          `No manifest found at ${path}. Make sure you are in a directory with an initialized DNP.`
+        );
+      }
+    } else if (e.code === "ENOENT") {
       throw new CliError(
         `No manifest found at ${path}. Make sure you are in a directory with an initialized DNP.`
       );
